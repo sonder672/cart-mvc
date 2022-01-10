@@ -2,6 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use Src\View\Controller\SubCategoryController;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,3 +18,8 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+Route::get('/subcategory', [SubCategoryController::class, 'index']);
+Route::post('/subcategory', [SubCategoryController::class, 'create']);
+Route::put('/subcategory/{uuid}', [SubCategoryController::class, 'update']);
+Route::delete('/subcategory/{uuid}', [SubCategoryController::class, 'destroy']);
