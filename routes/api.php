@@ -2,6 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use Src\View\Controller\ShoppingListController;
 use Src\View\Controller\SubCategoryController;
 
 /*
@@ -23,3 +24,7 @@ Route::get('/subcategory', [SubCategoryController::class, 'index']);
 Route::post('/subcategory', [SubCategoryController::class, 'create']);
 Route::put('/subcategory/{uuid}', [SubCategoryController::class, 'update']);
 Route::delete('/subcategory/{uuid}', [SubCategoryController::class, 'destroy']);
+
+Route::post('/shopping/list', [ShoppingListController::class, 'add']);
+Route::get('/shoppingList', [ShoppingListController::class, 'delete']);
+Route::get('/shoppingList/products', [ShoppingListController::class, 'index']);
