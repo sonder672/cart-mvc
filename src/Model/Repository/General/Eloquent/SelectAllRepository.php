@@ -2,9 +2,7 @@
 
 namespace Src\Model\Repository\General\Eloquent;
 
-use Src\Model\Contract\ISelectAll;
-
-final class SelectAllRepository implements ISelectAll
+final class SelectAllRepository
 {
     private $model;
 

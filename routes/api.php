@@ -2,6 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use Src\View\Controller\DiscountController;
 use Src\View\Controller\ShoppingListController;
 use Src\View\Controller\SubCategoryController;
 
@@ -19,6 +20,10 @@ use Src\View\Controller\SubCategoryController;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+Route::get('/discount', [DiscountController::class, 'show']);
+Route::post('/discount', [DiscountController::class, 'create']);
+Route::put('/discount/{uuid}', [DiscountController::class, 'update']);
 
 Route::get('/subcategory', [SubCategoryController::class, 'index']);
 Route::post('/subcategory', [SubCategoryController::class, 'create']);
