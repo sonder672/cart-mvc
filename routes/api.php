@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use Src\View\Controller\DiscountController;
+use Src\View\Controller\ProductController;
 use Src\View\Controller\ShoppingListController;
 use Src\View\Controller\SubCategoryController;
 
@@ -34,3 +35,8 @@ Route::post('/shopping/list', [ShoppingListController::class, 'add']);
 Route::delete('/shopping/list', [ShoppingListController::class, 'subtractProduct']);
 Route::delete('/shopping/all/product', [ShoppingListController::class, 'deleteAllProduct']);
 Route::delete('/shopping/all/list', [ShoppingListController::class, 'deleteAllList']);
+
+Route::get('/product', [ProductController::class, 'indexBySubCategory']);
+Route::post('/product', [ProductController::class, 'create']);
+Route::put('/product/{uuid}', [ProductController::class, 'update']);
+Route::delete('/product/{uuid}', [ProductController::class, 'destroy']);
