@@ -27,15 +27,15 @@ class Product extends Model
     public function subCategory()
     {
         return $this->belongsTo(
-            'App\Eloquent\Models\SubCategory', 
+            'App\SubCategory', 
             'uuid_sub_category', 
             'uuid');
     }
 
-    public function carts()
+    public function shoppingLists()
     {
         return $this->hasMany(
-            'App\Eloquent\Models\Cart', 
+            'App\ShoppingList', 
             'uuid_product', 
             'uuid');
     }

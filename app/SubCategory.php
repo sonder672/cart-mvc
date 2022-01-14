@@ -27,7 +27,7 @@ class SubCategory extends Model
     public function discount()
     {
         return $this->belongsTo(
-            'App\Eloquent\Models\Discount', 
+            'App\Discount', 
             'uuid_discount', 
             'uuid');
     }
@@ -35,7 +35,7 @@ class SubCategory extends Model
     public function products()
     {
         return $this->hasMany(
-            'App\Eloquent\Models\Product', 
+            'App\Product', 
             'uuid_sub_category', 
             'uuid');
     }

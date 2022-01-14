@@ -22,13 +22,14 @@ class ShoppingList extends Model
         'price',
         'quantity',
         'uuid_product',
-        'uuid_invoice'
+        'uuid_invoice',
+        'stock'
     ];
 
     public function product()
     {
         return $this->belongsTo(
-            'App\Eloquent\Models\Product', 
+            'App\Product', 
             'uuid_product', 
             'uuid');
     }
@@ -36,7 +37,7 @@ class ShoppingList extends Model
     public function invoice()
     {
         return $this->belongsTo(
-            'App\Eloquent\Models\Invoice', 
+            'App\Invoice', 
             'uuid_invoice', 
             'uuid');
     }

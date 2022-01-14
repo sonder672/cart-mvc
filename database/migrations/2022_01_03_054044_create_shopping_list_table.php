@@ -16,6 +16,7 @@ class CreateShoppingListTable extends Migration
         Schema::create('shopping_list', function (Blueprint $table) {
             $table->string('uuid', $length = 36)->primary();
             $table->integer('price');
+            $table->smallInteger('stock');
             $table->smallInteger('quantity');
 
             $table->string('uuid_product', $length = 36);

@@ -28,7 +28,7 @@ class Discount extends Model
     public function subCategories()
     {
         return $this->hasMany(
-            'App\Eloquent\Models\SubCategory', 
+            'App\SubCategory', 
             'uuid_discount', 
             'uuid');
     }

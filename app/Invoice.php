@@ -20,10 +20,10 @@ class Invoice extends Model
         'uuid'
     ];
 
-    public function carts()
+    public function shoppingLists()
     {
         return $this->hasMany(
-            'App\Eloquent\Models\Cart', 
+            'App\ShoppingList', 
             'uuid_invoice', 
             'uuid');
     }
