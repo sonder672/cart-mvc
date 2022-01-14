@@ -3,7 +3,9 @@
 namespace Src\View\Controller;
 
 use App\Product;
+use App\SubCategory;
 use Illuminate\Http\Request;
+use Src\Controller\Entity\Product\Service\ProductWithDiscount;
 use Src\Controller\Entity\ShoppingList\Dto\DeleteAllListDto;
 use Src\Controller\Entity\ShoppingList\Dto\DeleteAllProductDto;
 use Src\Controller\Entity\ShoppingList\Dto\GeneralDto;
@@ -15,8 +17,9 @@ use Src\Controller\Entity\ShoppingList\Service\Delete\SubtractProduct;
 use Src\Controller\Entity\ShoppingList\Service\UpdatePriceService;
 use Src\Controller\MediatorPattern\Mediator;
 use Src\Controller\ProxyPattern\IntermediaryControllerService;
-use Src\Model\Repository\Product\FindRepository;
+use Src\Model\Repository\Product\Eloquent\FindRepository;
 use Src\Model\Repository\ShoppingList\Session\CreateRepository;
+use Src\Model\Repository\SubCategory\Eloquent\FindByDiscount;
 
 class ShoppingListController extends Controller
 {
@@ -29,15 +32,20 @@ class ShoppingListController extends Controller
         );
 
         $mediator = new Mediator();
+
+        $discount = new ProductWithDiscount(
+            new FindRepository(new Product()),
+            new FindByDiscount(new SubCategory())
+        );
         //Instancia colegas
         $addProduct = new AddProductService(
             new CreateRepository($request->sessionName),
-            new FindRepository(new Product()),
-            $mediator
+            $mediator,
+            $discount
         );
         $sumProduct = new SumProductService($mediator);
         $updatePrice = new UpdatePriceService(
-            new FindRepository(new Product()),
+            $discount,
             $mediator
         );
         //Agregar colegas al mediador.
@@ -62,10 +70,15 @@ class ShoppingListController extends Controller
         );
 
         $mediator = new Mediator();
+
+        $discount = new ProductWithDiscount(
+            new FindRepository(new Product()),
+            new FindByDiscount(new SubCategory())
+        );
         //Instancia colegas
         $subtractProduct = new SubtractProduct($mediator);
         $updatePrice = new UpdatePriceService(
-            new FindRepository(new Product()),
+            $discount,
             $mediator
         );
         $deleteAllProduct = new DeleteAllProduct($mediator);

@@ -2,17 +2,17 @@
 
 namespace Src\Controller\Entity\ShoppingList\Service;
 
+use Src\Controller\Entity\Product\Contract\IDiscount;
 use Src\Controller\MediatorPattern\AbstractColleague;
 use Src\Controller\MediatorPattern\IMediator;
-use Src\Model\Entity\Product\Contract\IFind;
 
 class UpdatePriceService extends AbstractColleague
 {
-    private $findProduct;
+    private $discount;
 
-    public function __construct(IFind $findProduct, IMediator $mediator)
+    public function __construct(IDiscount $findProduct, IMediator $mediator)
     {
-        $this->findProduct = $findProduct;
+        $this->discount = $findProduct;
         $this->mediator = $mediator;
     }
 
@@ -27,16 +27,14 @@ class UpdatePriceService extends AbstractColleague
 
     public function updatePrice($updateParams)
     {
-        $findProduct = $this->findProduct->findOrFail(
-            $updateParams['uuid_product']
-        );
-
         $quantity = $_SESSION[$updateParams['sessionName']]
         [$updateParams['positionCart']]['quantity'];
 
         $_SESSION[$updateParams['sessionName']]
         [$updateParams['positionCart']]['price'] = 
-        ($findProduct->price * $quantity);
+        ($this->discount->productWithDiscount(
+             $updateParams['uuid_product'] 
+             ) * $quantity);
 
         $this->mediator->send(null, 'done', $this);
     }  

@@ -32,9 +32,9 @@ Route::put('/subcategory/{uuid}', [SubCategoryController::class, 'update']);
 Route::delete('/subcategory/{uuid}', [SubCategoryController::class, 'destroy']);
 
 Route::post('/shopping/list', [ShoppingListController::class, 'add']);
-Route::delete('/shopping/list', [ShoppingListController::class, 'subtractProduct']);
-Route::delete('/shopping/all/product', [ShoppingListController::class, 'deleteAllProduct']);
-Route::delete('/shopping/all/list', [ShoppingListController::class, 'deleteAllList']);
+Route::delete('/shopping', [ShoppingListController::class, 'subtractProduct']);
+Route::delete('/shopping/list', [ShoppingListController::class, 'deleteAllProduct']);
+Route::delete('/shopping/all', [ShoppingListController::class, 'deleteAllList']);
 
 Route::get('/product', [ProductController::class, 'indexBySubCategory']);
 Route::post('/product', [ProductController::class, 'create']);

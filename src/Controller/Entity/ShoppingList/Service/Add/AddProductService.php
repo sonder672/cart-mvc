@@ -2,10 +2,10 @@
 
 namespace Src\Controller\Entity\ShoppingList\Service\Add;
 
+use Src\Controller\Entity\Product\Contract\IDiscount;
 use Src\Controller\MediatorPattern\AbstractColleague;
 use Src\Controller\MediatorPattern\IMediator;
 use Src\Controller\ProxyPattern\IIntermediaryControllerService;
-use Src\Model\Entity\Product\Contract\IFind;
 use Src\Model\Entity\ShoppingList\Contract\ICreate;
 use Src\Model\Entity\ShoppingList\ShoppingListEntity;
 use Src\Model\Entity\ShoppingList\ValueObject\QuantityValueObject;
@@ -14,17 +14,17 @@ final class AddProductService extends AbstractColleague
 implements IIntermediaryControllerService
 {
     private $repository;
-    private $findProduct;
+    private $discount;
 
     public function __construct(
         ICreate $repository, 
-        IFind $findProduct, 
-        IMediator $mediator
+        IMediator $mediator,
+        IDiscount $discount
         )
     {
         $this->repository = $repository;
-        $this->findProduct = $findProduct;
         $this->mediator = $mediator;
+        $this->discount = $discount;
     }   
 
     public function __invoke(object $dto)
@@ -41,12 +41,11 @@ implements IIntermediaryControllerService
                 return $_SESSION[$dto->sessionName()];
             }          
         }
-        $findProduct = $this->findProduct->findOrFail(
-            $dto->uuid_product()
-        );
 
         $list = new ShoppingListEntity(
-            ($findProduct->price * $dto->quantity()),
+            ($this->discount->productWithDiscount(
+                $dto->uuid_product()
+                ) * $dto->quantity()),
             new QuantityValueObject($dto->quantity()),
             $dto->uuid_product(),
             null

@@ -18,8 +18,11 @@ final class SumProductService extends AbstractColleague
 
     private function sumProduct(object $dto)
     {
+        //Verificación suma de TODOS Los productos menor a 20 y máxima cantidad
+        //por producto de solo 5.
+
         if ( ($this->quantityProducts($dto->sessionName()) + $dto->quantity() ) 
-                < 20) 
+                < 21 && $this->ProductExist($dto)[1] < 6) 
         { 
             $_SESSION[$dto->sessionName()]
             [$this->ProductExist($dto)[0]]['quantity'] =

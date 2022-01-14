@@ -1,6 +1,6 @@
 <?php
 
-namespace Src\Model\Repository\Product;
+namespace Src\Model\Repository\Product\Eloquent;
 
 use Src\Model\Entity\Product\Contract\IFind;
 

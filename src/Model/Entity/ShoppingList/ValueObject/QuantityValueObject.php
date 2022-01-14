@@ -20,7 +20,7 @@ final class QuantityValueObject
 
     public function setQuantity(int $quantity)
     {
-        if ($quantity > 9)
+        if ($quantity > 5)
         {
             throw new QuantityException('Cantidad excesiva del producto');
         }
