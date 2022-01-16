@@ -21,7 +21,8 @@ final class CreateRepository implements ICreate
             'price' => $product->price(),
             'stock' => $product->stock(),
             'uuid_sub_category' => $product->uuidSubCategory(),
-            'uuid' => $product->uuid()
+            'uuid' => $product->uuid(),
+            'sold_out' => $product->soldOut()
         ]);
     }
 }

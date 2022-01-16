@@ -13,6 +13,7 @@ final class ProductEntity
     private $price;
     private $uuidSubCategory;
     private $name;
+    private $soldOut;
 
     public function __construct(
         StockValueObject $stock,
@@ -26,6 +27,7 @@ final class ProductEntity
         $this->uuidSubCategory = $uuidSubCategory;
         $this->name = $name;
         $this->uuid = (new GenerateUuid())->uuidv4();
+        $this->soldOut = false;
     }
 
     public function stock()
@@ -51,5 +53,10 @@ final class ProductEntity
     public function uuid()
     {
         return $this->uuid;
+    }
+
+    public function soldOut()
+    {
+        return $this->soldOut;
     }
 }
