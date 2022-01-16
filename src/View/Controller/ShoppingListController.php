@@ -2,10 +2,16 @@
 
 namespace Src\View\Controller;
 
+use App\Invoice;
 use App\Product;
+use App\ShoppingList;
 use App\SubCategory;
 use Illuminate\Http\Request;
+use Src\Controller\Entity\Invoice\Service\CreateService;
+use Src\Controller\Entity\Product\Service\CheckOutOfStockService;
 use Src\Controller\Entity\Product\Service\ProductWithDiscount;
+use Src\Controller\Entity\Product\Service\SubtractStockService;
+use Src\Controller\Entity\ShoppingList\Dto\BuyDto;
 use Src\Controller\Entity\ShoppingList\Dto\DeleteAllListDto;
 use Src\Controller\Entity\ShoppingList\Dto\DeleteAllProductDto;
 use Src\Controller\Entity\ShoppingList\Dto\GeneralDto;
@@ -14,10 +20,18 @@ use Src\Controller\Entity\ShoppingList\Service\Add\SumProductService;
 use Src\Controller\Entity\ShoppingList\Service\Delete\DeleteAllList;
 use Src\Controller\Entity\ShoppingList\Service\Delete\DeleteAllProduct;
 use Src\Controller\Entity\ShoppingList\Service\Delete\SubtractProduct;
+use Src\Controller\Entity\ShoppingList\Service\Pay\InmediatePaymentService;
+use Src\Controller\Entity\ShoppingList\Service\RelevantInformation\SumAllProduct;
 use Src\Controller\Entity\ShoppingList\Service\UpdatePriceService;
 use Src\Controller\MediatorPattern\Mediator;
 use Src\Controller\ProxyPattern\IntermediaryControllerService;
+use Src\Model\Repository\Invoice\Eloquent\CreateRepository as InvoiceEloquentCreateRepository;
+use Src\Model\Repository\Product\Eloquent\CheckProductOutOfStockRepository;
+use Src\Model\Repository\Product\Eloquent\CheckStock;
 use Src\Model\Repository\Product\Eloquent\FindRepository;
+use Src\Model\Repository\Product\Eloquent\UpdateSoldOutRepository;
+use Src\Model\Repository\Product\Eloquent\UpdateStockRepository;
+use Src\Model\Repository\ShoppingList\Eloquent\CreateRepository as EloquentCreateRepository;
 use Src\Model\Repository\ShoppingList\Session\CreateRepository;
 use Src\Model\Repository\SubCategory\Eloquent\FindByDiscount;
 
@@ -41,7 +55,9 @@ class ShoppingListController extends Controller
         $addProduct = new AddProductService(
             new CreateRepository($request->sessionName),
             $mediator,
-            $discount
+            $discount,
+            new CheckProductOutOfStockRepository(new Product()),
+            new CheckStock(new Product())
         );
         $sumProduct = new SumProductService($mediator);
         $updatePrice = new UpdatePriceService(
@@ -135,5 +151,47 @@ class ShoppingListController extends Controller
         $proxy->__invoke($deleteAllListDto);
 
         return response()->json('successfully removed');
+    }
+
+    public function buy(Request $request)
+    {
+        $buyDto = new BuyDto(
+            $request->sessionName
+        );
+
+        $mediator = new Mediator();
+        //Instancia de colegas.
+        $buyService = new InmediatePaymentService(
+            new EloquentCreateRepository(new ShoppingList()),
+            $mediator,
+            new SumAllProduct()
+        );
+        $createInvoice = new CreateService(
+            new InvoiceEloquentCreateRepository(new Invoice()),
+            $mediator
+        );
+        $subtractStock = new SubtractStockService(
+            new UpdateStockRepository(new Product()),
+            $mediator
+        );
+        $deleteSesion = new DeleteAllList($mediator);
+        $updateSoldOut = new CheckOutOfStockService(
+            new CheckStock(new Product()),
+            new UpdateSoldOutRepository(new Product()),
+            $mediator
+        );
+        //Agregar colegas al mediador.
+        $mediator->addColleague($buyService);
+        $mediator->addColleague($createInvoice);
+        $mediator->addColleague($subtractStock);
+        $mediator->addColleague($deleteSesion);
+        $mediator->addColleague($updateSoldOut);
+        //ProxyPattern
+        $proxy = new IntermediaryControllerService($buyService);
+
+        session_start();
+        $proxy->__invoke($buyDto);
+
+        return response()->json('purchase made');
     }
 }
