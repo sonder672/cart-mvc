@@ -17,6 +17,8 @@ class CreateProductsTable extends Migration
             $table->string('uuid', $length = 36)->primary();
             $table->string('name');
             $table->integer('price');
+            $table->integer('stock');
+            $table->boolean('sold_out');
 
             $table->string('uuid_sub_category', $length = 36);
             $table->foreign('uuid_sub_category')

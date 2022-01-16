@@ -21,7 +21,9 @@ class Product extends Model
         'name',
         'price',
         'uuid',
-        'uuid_sub_category'
+        'uuid_sub_category',
+        'sold_out',
+        'stock'
     ];
 
     public function subCategory()

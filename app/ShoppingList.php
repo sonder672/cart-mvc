@@ -22,8 +22,7 @@ class ShoppingList extends Model
         'price',
         'quantity',
         'uuid_product',
-        'uuid_invoice',
-        'stock'
+        'uuid_invoice'
     ];
 
     public function product()
