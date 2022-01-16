@@ -23,9 +23,9 @@ final class CreateService implements IIntermediaryControllerService
     {
         $newDiscount = new DiscountEntity(
             new PercentValueObject($dto->percent()),
-            new EndDateValueObject(new DateTime($dto->endDate())),
-            new DescriptionValueObject($dto->description())
-        );
+            new EndDateValueObject( new DateTime($dto->endDate()) ),
+                new DescriptionValueObject($dto->description())
+            );
 
         $this->repository->create($newDiscount);
     }
