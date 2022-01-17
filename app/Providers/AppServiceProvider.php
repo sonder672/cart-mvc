@@ -15,10 +15,6 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->bind(
-            IFind::class,
-            FindRepository::class
-        );
     }
 
     /**
