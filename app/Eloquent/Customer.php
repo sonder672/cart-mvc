@@ -5,7 +5,7 @@ namespace App\Eloquent;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Invoice extends Model
+class Customer extends Model
 {
     use HasFactory;
 
@@ -15,25 +15,20 @@ class Invoice extends Model
 
     public $incrementing = false;
 
+    public $timestamps = false;
+
     protected $fillable = [
-        'price',
+        'name',
+        'email',
+        'password',
         'uuid'
     ];
 
-    public function shoppingLists()
+    public function invoices()
     {
         return $this->hasMany(
-            'App\Eloquent\ShoppingList', 
-            'uuid_invoice', 
+            'App\Eloquent\Invoice', 
+            'uuid_customer', 
             'uuid');
-    }
-
-    public function customer()
-    {
-        return $this->belongsTo(
-            'App\Eloquent\Customer',
-            'uuid_customer',
-            'uuid'
-        );
     }
 }
