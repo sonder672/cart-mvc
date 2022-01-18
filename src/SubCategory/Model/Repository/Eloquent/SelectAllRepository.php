@@ -1,8 +1,10 @@
 <?php
 
-namespace Src\Model\Repository\General\Eloquent;
+namespace Src\SubCategory\Model\Repository\Eloquent;
 
-final class SelectAllRepository
+use Src\SubCategory\Model\Business\Contract\ISelectAll;
+
+final class SelectAllRepository implements ISelectAll
 {
     private $model;
 

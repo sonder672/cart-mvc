@@ -11,8 +11,8 @@ use Src\Discount\Controller\Service\CreateService;
 use Src\Discount\Controller\Service\SelectAllService;
 use Src\Discount\Controller\Service\UpdateService;
 use Src\Discount\Model\Repository\Eloquent\CreateRepository;
+use Src\Discount\Model\Repository\Eloquent\SelectAllRepository;
 use Src\Discount\Model\Repository\Eloquent\UpdateRepository;
-use Src\Model\Repository\General\Eloquent\SelectAllRepository;
 use Src\Patterns\ProxyPattern\IntermediaryControllerService;
 
 class DiscountController extends Controller

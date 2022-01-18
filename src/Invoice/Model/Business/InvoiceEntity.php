@@ -8,11 +8,13 @@ final class InvoiceEntity
 {
     private $price;
     private $uuid;
+    private $uuid_customer;
 
     public function __construct(int $price, UuidValueObject $uuid)
     {
         $this->price = $price;
         $this->uuid = $uuid;
+        $this->uuid_customer = $_SESSION['uuid'];
     }
 
     public function price()
@@ -23,5 +25,10 @@ final class InvoiceEntity
     public function uuid()
     {
         return $this->uuid->uuid();
+    }
+
+    public function uuidCustomer()
+    {
+        return $this->uuid_customer;
     }
 }

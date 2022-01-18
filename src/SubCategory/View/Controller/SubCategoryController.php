@@ -5,7 +5,6 @@ namespace Src\SubCategory\View\Controller;
 use App\Controller;
 use App\Eloquent\SubCategory;
 use Illuminate\Http\Request;
-use Src\Model\Repository\General\Eloquent\SelectAllRepository;
 use Src\Patterns\ProxyPattern\IntermediaryControllerService;
 use Src\SubCategory\Controller\Dto\CreateDto;
 use Src\SubCategory\Controller\Dto\DeleteDto;
@@ -16,6 +15,7 @@ use Src\SubCategory\Controller\Service\SelectAllService;
 use Src\SubCategory\Controller\Service\UpdateService;
 use Src\SubCategory\Model\Repository\Eloquent\CreateRepository;
 use Src\SubCategory\Model\Repository\Eloquent\DeleteRepository;
+use Src\SubCategory\Model\Repository\Eloquent\SelectAllRepository;
 use Src\SubCategory\Model\Repository\Eloquent\UpdateRepository;
 
 class SubCategoryController extends Controller

@@ -2,11 +2,10 @@
 
 namespace Src\Product\Controller\Service\Check;
 
-use Src\Patterns\ProxyPattern\IIntermediaryControllerService;
 use Src\Product\Model\Business\Contract\Check\IFindBySubCategory;
 use Src\Product\Model\Business\Exception\ProductBySubCategoryException;
 
-final class ShowBySubCategory implements IIntermediaryControllerService
+final class ShowBySubCategory
 {
     private $repository;
 
@@ -15,9 +14,9 @@ final class ShowBySubCategory implements IIntermediaryControllerService
         $this->repository = $repository;
     }
 
-    public function __invoke(object $dto)
+    public function productSubCategory(string $uuidSubCategory)
     {
-        $all = $this->repository->findBySubCategory($dto->uuidSubCategory());
+        $all = $this->repository->findBySubCategory($uuidSubCategory);
         if (count($all) == 0)
         {
             throw new ProductBySubCategoryException('No hay elementos');

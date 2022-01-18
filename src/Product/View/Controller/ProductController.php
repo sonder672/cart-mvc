@@ -75,19 +75,15 @@ class ProductController extends Controller
         return response()->json(['result' => 'Updated']);
     }
 
-    public function indexBySubCategory(Request $request)
+    public function indexBySubCategory($uuidSubCategory)
     {
-        $dto = new ProductSubCategoryDto(
-            $request->uuidSubCategory
-        );
-
         $indexRepository = new FindBySubCategory(new SubCategory());
-        $allProxy = new IntermediaryControllerService(
-            new ShowBySubCategory($indexRepository)
-        );
-
-        $allProxy->__invoke($dto);
+        $allProductSubCategory = new ShowBySubCategory($indexRepository);
         
-        return response()->json($allProxy->__invoke($dto));
+        $allProductSubCategory->productSubCategory($uuidSubCategory);
+
+        return response()->json(
+            $allProductSubCategory->productSubCategory($uuidSubCategory)
+        );
     }
 }

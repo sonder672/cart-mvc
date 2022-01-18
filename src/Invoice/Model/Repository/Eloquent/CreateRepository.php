@@ -19,6 +19,7 @@ final class CreateRepository implements ICreate
         $this->model->create([
             'uuid' => $invoice->uuid(),
             'price' => $invoice->price(),
+            'uuid_customer' => $invoice->uuidCustomer()
         ]);
     }
 }
