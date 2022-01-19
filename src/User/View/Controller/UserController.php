@@ -49,7 +49,6 @@ class UserController extends Controller
             new UpdateService($updateRepository, $findRepository)
         );
 
-        session_start();
         $updateProxy->__invoke($dto);
 
         return response()->json('Updated');

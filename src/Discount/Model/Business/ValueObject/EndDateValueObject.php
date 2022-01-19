@@ -21,8 +21,7 @@ final class EndDateValueObject
 
     private function setEndDate($date)
     {
-        $interval = date_diff($date, new DateTime('now'));
-        if ($interval->d < 2)
+        if ($date < new DateTime('now'))
         {
             throw new InvalidDateException('Fecha a finalizar inválida');
         }

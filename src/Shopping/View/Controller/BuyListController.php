@@ -60,7 +60,6 @@ class BuyListController extends Controller
         //ProxyPattern
         $proxy = new IntermediaryControllerService($buyService);
 
-        session_start();
         $proxy->__invoke($buyDto);
 
         return response()->json('purchase made');

@@ -17,7 +17,8 @@ class Invoice extends Model
 
     protected $fillable = [
         'price',
-        'uuid'
+        'uuid',
+        'uuid_customer'
     ];
 
     public function shoppingLists()

@@ -24,11 +24,6 @@ use Src\User\View\Controller\UserController;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
-
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
-
 Route::get('/discount', [DiscountController::class, 'show']);
 Route::post('/discount', [DiscountController::class, 'create']);
 Route::put('/discount/{uuid}', [DiscountController::class, 'update']);
@@ -43,16 +38,14 @@ Route::delete('/shopping', [DeleteListController::class, 'subtractProduct']);
 Route::delete('/shopping/list', [DeleteListController::class, 'deleteAllProduct']);
 Route::delete('/shopping/all', [DeleteListController::class, 'deleteAllList']);
 
-
 Route::get('/product/{uuidSubCategory}', [ProductController::class, 'indexBySubCategory']);
 Route::post('/product', [ProductController::class, 'create']);
 Route::put('/product/{uuid}', [ProductController::class, 'update']);
 Route::delete('/product/{uuid}', [ProductController::class, 'destroy']);
 
-
-
 Route::post('/user', [UserController::class, 'create']);
 Route::post('/login', [AuthController::class, 'login']);
+Route::post('/logout', [AuthController::class, 'logout']);
 
 Route::middleware([LoggedIn::class])->group(function () 
 {
