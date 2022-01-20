@@ -58,6 +58,7 @@ class UserController extends Controller
 
     public function find()
     {
+
         $dto = new FindDto($_SESSION['uuid']);
 
         $repository = new FindOrFailRepository(new Customer());

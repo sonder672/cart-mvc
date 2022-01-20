@@ -48,7 +48,6 @@ final class LoginService implements IIntermediaryControllerService
         return [
             'uuid' => $uuid,
             'password' => $password
-        ];
-        
+        ];       
     }
 }

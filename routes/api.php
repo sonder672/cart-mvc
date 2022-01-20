@@ -42,7 +42,7 @@ Route::delete('/shopping/list', [DeleteListController::class, 'deleteAllProduct'
 Route::delete('/shopping/all', [DeleteListController::class, 'deleteAllList']);
 
 Route::get('/product/{uuidSubCategory}', [ProductController::class, 'indexBySubCategory']);
-Route::get('/product/{uuid}', [ProductController::class, 'find']);
+Route::get('/product/show/{uuid}', [ProductController::class, 'find']);
 Route::post('/product', [ProductController::class, 'create']);
 Route::put('/product/{uuid}', [ProductController::class, 'update']);
 Route::delete('/product/{uuid}', [ProductController::class, 'destroy']);

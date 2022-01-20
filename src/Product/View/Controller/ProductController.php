@@ -93,13 +93,13 @@ class ProductController extends Controller
     {
         $dto = new FindDto($uuid);
 
-        $repository = new FindRepository(new Product());
+        $findRepository = new FindRepository(new Product());
         $proxy = new IntermediaryControllerService(
-            new FindService($repository)
+            new FindService($findRepository)
         );
 
         $proxy->__invoke($dto);
 
-        return dd($proxy->__invoke($dto));
+        return response()->json($proxy->__invoke($dto));
     }
 }
