@@ -7,8 +7,10 @@ use App\Eloquent\Customer;
 use Illuminate\Http\Request;
 use Src\Patterns\ProxyPattern\IntermediaryControllerService;
 use Src\User\Controller\Dto\CreateDto;
+use Src\User\Controller\Dto\FindDto;
 use Src\User\Controller\Dto\UpdateDto;
 use Src\User\Controller\Service\CreateService;
+use Src\User\Controller\Service\FindService;
 use Src\User\Controller\Service\UpdateService;
 use Src\User\Model\Repository\Eloquent\CreateRepository;
 use Src\User\Model\Repository\Eloquent\FindOrFailRepository;
@@ -54,8 +56,17 @@ class UserController extends Controller
         return response()->json('Updated');
     }
 
-    public function index()
+    public function find()
     {
+        $dto = new FindDto($_SESSION['uuid']);
 
+        $repository = new FindOrFailRepository(new Customer());
+        $proxy = new IntermediaryControllerService(
+            new FindService($repository)
+        );
+
+        $proxy->__invoke($dto);
+
+        return response()->json($proxy->__invoke($dto));
     }
 }

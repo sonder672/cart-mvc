@@ -9,15 +9,17 @@ use Illuminate\Http\Request;
 use Src\Patterns\ProxyPattern\IntermediaryControllerService;
 use Src\Product\Controller\Dto\CreateDto;
 use Src\Product\Controller\Dto\DeleteDto;
-use Src\Product\Controller\Dto\ProductSubCategoryDto;
+use Src\Product\Controller\Dto\FindDto;
 use Src\Product\Controller\Dto\UpdateDto;
 use Src\Product\Controller\Service\Check\ShowBySubCategory;
 use Src\Product\Controller\Service\Crud\CreateService;
 use Src\Product\Controller\Service\Crud\DeleteService;
+use Src\Product\Controller\Service\Crud\FindService;
 use Src\Product\Controller\Service\Crud\UpdateService;
 use Src\Product\Model\Repository\Eloquent\Check\FindBySubCategory;
 use Src\Product\Model\Repository\Eloquent\Crud\CreateRepository;
 use Src\Product\Model\Repository\Eloquent\Crud\DeleteRepository;
+use Src\Product\Model\Repository\Eloquent\Crud\FindRepository;
 use Src\Product\Model\Repository\Eloquent\Crud\UpdateRepository;
 
 class ProductController extends Controller
@@ -85,5 +87,19 @@ class ProductController extends Controller
         return response()->json(
             $allProductSubCategory->productSubCategory($uuidSubCategory)
         );
+    }
+
+    public function find($uuid)
+    {
+        $dto = new FindDto($uuid);
+
+        $repository = new FindRepository(new Product());
+        $proxy = new IntermediaryControllerService(
+            new FindService($repository)
+        );
+
+        $proxy->__invoke($dto);
+
+        return response()->json($proxy->__invoke($dto));
     }
 }

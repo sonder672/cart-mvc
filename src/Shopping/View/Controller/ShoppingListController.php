@@ -4,9 +4,12 @@ namespace Src\Shopping\View\Controller;
 
 use App\Controller;
 use App\Eloquent\Invoice;
+use Illuminate\Http\Request;
 use Src\Patterns\ProxyPattern\IntermediaryControllerService;
 use Src\Shopping\Controller\Dto\SelectByInvoiceDto;
+use Src\Shopping\Controller\Dto\ShowDto;
 use Src\Shopping\Controller\Service\SelectAllService;
+use Src\Shopping\Controller\Service\ShowService;
 use Src\Shopping\Model\Repository\Eloquent\SelectByInvoiceRepository;
 
 class ShoppingListController extends Controller
@@ -25,5 +28,18 @@ class ShoppingListController extends Controller
         $selectProxy->__invoke($dto);
 
         return response()->json($selectProxy->__invoke($dto));
+    }
+
+    public function show(Request $request)
+    {
+        $dto = new ShowDto($request->sessionName);
+
+        $proxy = new IntermediaryControllerService(
+            new ShowService()
+        );
+
+        $proxy->__invoke($dto);
+
+        return response()->json($proxy->__invoke($dto));
     }
 }

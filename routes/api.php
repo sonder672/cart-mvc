@@ -25,20 +25,24 @@ use Src\User\View\Controller\UserController;
 |
 */
 Route::get('/discount', [DiscountController::class, 'show']);
+Route::get('/discount/{uuid}', [DiscountController::class, 'find']);
 Route::post('/discount', [DiscountController::class, 'create']);
 Route::put('/discount/{uuid}', [DiscountController::class, 'update']);
 
 Route::get('/subcategory', [SubCategoryController::class, 'index']);
+Route::get('/subcategory/{uuid}', [SubCategoryController::class, 'find']);
 Route::post('/subcategory', [SubCategoryController::class, 'create']);
 Route::put('/subcategory/{uuid}', [SubCategoryController::class, 'update']);
 Route::delete('/subcategory/{uuid}', [SubCategoryController::class, 'destroy']);
 
+Route::get('shopping/list', [ShoppingListController::class, 'show']);
 Route::post('/shopping/list', [AddListController::class, 'add']);
 Route::delete('/shopping', [DeleteListController::class, 'subtractProduct']);
 Route::delete('/shopping/list', [DeleteListController::class, 'deleteAllProduct']);
 Route::delete('/shopping/all', [DeleteListController::class, 'deleteAllList']);
 
 Route::get('/product/{uuidSubCategory}', [ProductController::class, 'indexBySubCategory']);
+Route::get('/product/{uuid}', [ProductController::class, 'find']);
 Route::post('/product', [ProductController::class, 'create']);
 Route::put('/product/{uuid}', [ProductController::class, 'update']);
 Route::delete('/product/{uuid}', [ProductController::class, 'destroy']);
@@ -49,6 +53,7 @@ Route::post('/logout', [AuthController::class, 'logout']);
 
 Route::middleware([LoggedIn::class])->group(function () 
 {
+    Route::get('/user', [UserController::class, 'find']);
     Route::put('/user', [UserController::class, 'update']);
     Route::post('/shopping/buy', [BuyListController::class, 'buy']);
     Route::get('/invoice', [InvoiceController::class, 'index']);

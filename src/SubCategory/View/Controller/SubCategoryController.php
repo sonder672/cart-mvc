@@ -8,13 +8,16 @@ use Illuminate\Http\Request;
 use Src\Patterns\ProxyPattern\IntermediaryControllerService;
 use Src\SubCategory\Controller\Dto\CreateDto;
 use Src\SubCategory\Controller\Dto\DeleteDto;
+use Src\SubCategory\Controller\Dto\FindDto;
 use Src\SubCategory\Controller\Dto\UpdateDto;
 use Src\SubCategory\Controller\Service\CreateService;
 use Src\SubCategory\Controller\Service\DeleteService;
+use Src\SubCategory\Controller\Service\FindService;
 use Src\SubCategory\Controller\Service\SelectAllService;
 use Src\SubCategory\Controller\Service\UpdateService;
 use Src\SubCategory\Model\Repository\Eloquent\CreateRepository;
 use Src\SubCategory\Model\Repository\Eloquent\DeleteRepository;
+use Src\SubCategory\Model\Repository\Eloquent\FindRepository;
 use Src\SubCategory\Model\Repository\Eloquent\SelectAllRepository;
 use Src\SubCategory\Model\Repository\Eloquent\UpdateRepository;
 
@@ -78,5 +81,19 @@ class SubCategoryController extends Controller
         $all->__invoke();
 
         return response()->json($all->__invoke());
+    }
+
+    public function find($uuid)
+    {
+        $dto = new FindDto($uuid);
+
+        $repository = new FindRepository(new SubCategory());
+        $proxy = new IntermediaryControllerService(
+            new FindService($repository)
+        );
+
+        $proxy->__invoke($dto);
+
+        return response()->json($proxy->__invoke($dto));
     }
 }
