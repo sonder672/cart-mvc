@@ -37,7 +37,7 @@ class ShoppingListController extends Controller
         $proxy = new IntermediaryControllerService(
             new ShowService()
         );
-
+        session_start();
         $proxy->__invoke($dto);
 
         return response()->json($proxy->__invoke($dto));

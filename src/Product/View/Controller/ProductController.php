@@ -100,6 +100,6 @@ class ProductController extends Controller
 
         $proxy->__invoke($dto);
 
-        return response()->json($proxy->__invoke($dto));
+        return dd($proxy->__invoke($dto));
     }
 }

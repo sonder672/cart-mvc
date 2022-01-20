@@ -9,10 +9,10 @@ final class ShowService implements IIntermediaryControllerService
 {
     public function __invoke(object $dto)
     {
-        if (isset( $_SESSION[$dto->uuid()] ))
+        if (!isset( $_SESSION[$dto->sessionName()] ))
         {
-            return $_SESSION[$dto->uuid()];
+            throw new EmptyListException('Agregue primero productos');
         }
-        throw new EmptyListException('Agregue primero productos');
+        return $_SESSION[$dto->sessionName()];
     }
 }
