@@ -9,6 +9,10 @@ final class ShowService implements IIntermediaryControllerService
 {
     public function __invoke(object $dto)
     {
+        if(!isset($_SESSION)) { 
+            session_start(); 
+        }
+        
         if (!isset( $_SESSION[$dto->sessionName()] ))
         {
             throw new EmptyListException('Agregue primero productos');

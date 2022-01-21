@@ -35,7 +35,7 @@ Route::post('/subcategory', [SubCategoryController::class, 'create']);
 Route::put('/subcategory/{uuid}', [SubCategoryController::class, 'update']);
 Route::delete('/subcategory/{uuid}', [SubCategoryController::class, 'destroy']);
 
-Route::get('shopping/list', [ShoppingListController::class, 'show']);
+Route::get('shopping/list/{uuidSubCategory}', [ShoppingListController::class, 'show']);
 Route::post('/shopping/list', [AddListController::class, 'add']);
 Route::delete('/shopping', [DeleteListController::class, 'subtractProduct']);
 Route::delete('/shopping/list', [DeleteListController::class, 'deleteAllProduct']);

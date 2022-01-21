@@ -18,6 +18,10 @@ final class CreateRepository implements ICreate
     {
         $numProducts = 0;
 
+        if(!isset($_SESSION)) { 
+            session_start(); 
+        }
+        
         if (isset($_SESSION[$this->session]))
         {
             $numProducts = count( $_SESSION[$this->session] ); 

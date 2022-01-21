@@ -30,14 +30,14 @@ class ShoppingListController extends Controller
         return response()->json($selectProxy->__invoke($dto));
     }
 
-    public function show(Request $request)
+    public function show($uuidSubCategory)
     {
-        $dto = new ShowDto($request->sessionName);
+        $dto = new ShowDto($uuidSubCategory);
 
         $proxy = new IntermediaryControllerService(
             new ShowService()
         );
-        session_start();
+
         $proxy->__invoke($dto);
 
         return response()->json($proxy->__invoke($dto));
